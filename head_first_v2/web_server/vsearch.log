@@ -1,0 +1,3 @@
+ImmutableMultiDict([('phrase', 'make a table'), ('letters', 'abc')])|127.0.0.1|Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36|{'b', 'a'}
+ImmutableMultiDict([('phrase', 'one liner'), ('letters', 'ioe')])|127.0.0.1|Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36|{'o', 'i', 'e'}
+ImmutableMultiDict([('phrase', 'test line three'), ('letters', 'abcde')])|127.0.0.1|Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36|{'e'}
