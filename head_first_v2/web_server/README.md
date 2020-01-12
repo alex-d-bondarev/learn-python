@@ -19,14 +19,24 @@ This section covers chapter 5-7
         1. User = root
         1. Password = test_pass
 1. Set up DB: 
-    ```sql
-    create database vsearchlogDB;
-    CREATE USER 'vsearch' IDENTIFIED BY 'vsearchpasswd';
-    GRANT ALL ON vsearchlogDB.* TO 'vsearch';
-    ```
+```sql
+create database vsearchlogDB;
+CREATE USER 'vsearch' IDENTIFIED BY 'vsearchpasswd';
+GRANT ALL ON vsearchlogDB.* TO 'vsearch';
+
+Use vsearchlogDB;
+create table log (
+id int auto_increment primary key,
+ts timestamp default current_timestamp,
+phrase varchar(128) not null,
+letters varchar(32) not null,
+ip varchar(16) not null,
+browser_string varchar(256) not null,
+results varchar(64) not null );
+```
         
 ## Run
 
-Open [hello_flask](hello_flask.py) via IDE and launch it
-
-OR run via concole `python3 hello_flask.py`
+1. Open [hello_flask](hello_flask.py) via IDE and launch it
+    OR run via concole `python3 hello_flask.py`
+1. Browse http://127.0.0.1:5000/
