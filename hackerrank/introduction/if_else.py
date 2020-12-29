@@ -10,12 +10,9 @@ if __name__ == '__main__':
     weird = "Weird"
     not_weird = "Not Weird"
 
-    if not even(n):
+    if not even(n) or 6 <= n <= 20:
         output = weird
     else:
-        if 6 <= n <= 20:
-            output = weird
-        else:
-            output = not_weird
+        output = not_weird
 
     print(output)
