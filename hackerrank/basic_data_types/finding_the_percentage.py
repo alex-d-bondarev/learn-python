@@ -7,4 +7,7 @@ if __name__ == '__main__':
         student_marks[name] = scores
     query_name = input()
 
-    # TBD
+    marks = student_marks[query_name]
+    average = sum(marks) / len(marks)
+
+    print("%.2f" % average)
