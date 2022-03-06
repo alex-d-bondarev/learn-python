@@ -1,4 +1,5 @@
 import time
+import traceback
 
 import docker
 import requests
@@ -58,12 +59,15 @@ def _load_test_the_url(test_url, duration):
 
     except (ConnectionError, ReadTimeout) as e:
         print(f"{test_url} is already down")
+        print(traceback.format_exc())
 
     except StopIteration as e:
         print(f"{test_url} load test took over 700 seconds")
+        print(traceback.format_exc())
 
     except Exception as e:
         print(f"failed to process {test_url}")
+        print(traceback.format_exc())
 
 
 def _print_container_log(log: str):
