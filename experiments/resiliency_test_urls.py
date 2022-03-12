@@ -62,6 +62,14 @@ class DockerWrapper(object):
     def _get_docker_client():
         return docker.from_env()
 
+    @staticmethod
+    def force_remove_all_containers():
+        """ Self Evident """
+        client = DockerWrapper._get_docker_client()
+        containers = client.containers.list(all=True)
+        for dc in containers:
+            dc.remove(force=True)
+
     def run_docker_detached(self) -> str:
         """ Run detached docker container and return its id
 
@@ -128,9 +136,16 @@ def start_the_infinite_resiliency_test(duration=300):
         cycle += 1
 
 
+def _read_file_lines():
+    file1 = open('urls_list.txt', 'r')
+    lines = file1.readlines()
+    return lines
+
+
 def _load_test_the_url(test_url, duration):
     try:
         requests.get(test_url, timeout=30)
+        DockerWrapper.force_remove_all_containers()
         _load_test_the_url_with_700s_timeout(test_url, duration)
 
     except (ConnectionError, ReadTimeout) as e:
@@ -142,6 +157,71 @@ def _load_test_the_url(test_url, duration):
     except Exception as e:
         print(f"failed to process {test_url}")
         print(traceback.format_exc())
+
+
+@timeout_decorator.timeout(700, timeout_exception=TimeoutError)
+def _load_test_the_url_with_700s_timeout(test_url, duration):
+    print(f"Start Testing {test_url}")
+    _run_the_test(test_url, duration)
+    print(f"Finished testing {test_url}")
+
+
+def _run_the_test(test_url: str, duration: int):
+    start = time.time()
+    try:
+        run_ripper_test(duration, start, test_url)
+
+    except NotFound as e:
+        print(f"Failed to run ripper against {test_url}")
+        new_duration = duration - (time.time() - start) - 1
+
+        if new_duration > 1:
+            run_bombardier_test(new_duration, test_url)
+
+
+def run_ripper_test(duration, start, test_url):
+    """ Use RipperSetup to run the test
+
+    :param duration:
+    :param start:
+    :param test_url:
+    """
+    print(f"Start ripper for {test_url}")
+    ripper_setup = RipperSetup(
+        duration=duration,
+        request_timeout=30,
+        test_url=test_url
+    )
+    do_ripper = True
+    docker_wrapper = DockerWrapper(ripper_setup)
+    docker_wrapper.run_docker_detached()
+    while time.time() - start < duration and do_ripper:
+        time.sleep(10)
+        container_logs = docker_wrapper.get_detached_container_logs()
+        count_rippering = container_logs.count("rippering")
+        count_down = container_logs.count("down")
+
+        if count_down / count_rippering > 0.5:
+            do_ripper = False
+    if docker_wrapper.container_is_running():
+        docker_wrapper.stop()
+    print(f"Stopped ripper for {test_url}")
+
+
+def run_bombardier_test(new_duration, test_url):
+    """ Use BombardierSetup to run the test
+
+    :param new_duration:
+    :param test_url:
+    """
+    print(f"Start bombardier for {test_url}")
+    bombardier_setup = BombardierSetup(
+        duration=int(new_duration),
+        request_timeout=30,
+        test_url=test_url,
+    )
+    decoded_container_log = DockerWrapper(bombardier_setup).run_container_attached()
+    _print_bombardier_stats(decoded_container_log)
 
 
 def _print_bombardier_stats(log: str):
@@ -156,64 +236,6 @@ def _print_bombardier_stats(log: str):
             break
         if print_line:
             text_to_print += line + "\n"
-
-
-def _run_the_test(test_url: str, duration: int):
-    start = time.time()
-    do_ripper = True
-    ripper_setup = RipperSetup(
-        duration=duration,
-        request_timeout=30,
-        test_url=test_url
-    )
-
-    print(f"Start ripper for {test_url}")
-    docker_wrapper = DockerWrapper(ripper_setup)
-    docker_wrapper.run_docker_detached()
-
-    try:
-        while time.time() - start < duration and do_ripper:
-            time.sleep(10)
-            container_logs = docker_wrapper.get_detached_container_logs()
-            count_rippering = container_logs.count("rippering")
-            count_down = container_logs.count("down")
-
-            if count_down / count_rippering > 0.5:
-                do_ripper = False
-
-        if docker_wrapper.container_is_running():
-            docker_wrapper.stop()
-
-        print(f"Stopped ripper for {test_url}")
-
-    except NotFound as e:
-        print(f"Failed to ripper {test_url}")
-
-        new_duration = duration - (time.time() - start) - 1
-
-        if new_duration > 1:
-            print(f"Start bombardier for {test_url}")
-            bombardier_setup = BombardierSetup(
-                duration=int(new_duration),
-                request_timeout=30,
-                test_url=test_url,
-            )
-
-            decoded_container_log = DockerWrapper(bombardier_setup).run_container_attached()
-            _print_bombardier_stats(decoded_container_log)
-
-
-@timeout_decorator.timeout(700, timeout_exception=TimeoutError)
-def _load_test_the_url_with_700s_timeout(test_url, duration):
-    print(f"Start Testing {test_url}")
-    _run_the_test(test_url, duration)
-    print(f"Finished testing {test_url}")
-
-
-def _read_file_lines():
-    file1 = open('urls_list.txt', 'r')
-    lines = file1.readlines()
-    return lines
 
 
 if __name__ == '__main__':
