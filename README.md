@@ -3,7 +3,7 @@ Learn python basics
 
 ## Build
 ### First time
-1. Make sure that ```python --version``` is `3.10.*`.
+1. Make sure that ```python3 --version``` is `3.10.*`.
 2. Run ```poetry env use `python --version | grep -Eo '[0-9]+([.][0-9]+)+([.][0-9]+)?'` && poetry install```
 
 ### Update dependencies
