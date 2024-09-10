@@ -5,16 +5,21 @@ from copy import copy
 from timeit import default_timer as timer
 
 from dsa.sort_arrays.bubble_sort import breaking_buble_sort, simple_buble_sort
-from dsa.sort_arrays.counting_sort import (counting_sort_simple,
+from dsa.sort_arrays.counting_sort import (counting_sort, counting_sort_v2,
                                            counting_sort_w3c)
+from dsa.sort_arrays.hybrids import (call_quicksort_so,
+                                     quick_insertion_sort_hybrid)
 from dsa.sort_arrays.insertion_sort import insertion_sort
+from dsa.sort_arrays.merge_sort import merge_sort_loop, merge_sort_req
 from dsa.sort_arrays.quick_sort import call_quick_sort
+from dsa.sort_arrays.radix_sort import rad_sort_w3c, simple_rad_sort
 from dsa.sort_arrays.selection_sort import selection_sort
 
 logger = logging.getLogger(__name__)
 
 ALL_SORTING_FUNCTIONS = [simple_buble_sort, breaking_buble_sort, selection_sort, insertion_sort, call_quick_sort,
-                         counting_sort_simple, counting_sort_w3c]
+                         counting_sort, counting_sort_v2, counting_sort_w3c, simple_rad_sort, rad_sort_w3c,
+                         merge_sort_req, merge_sort_loop, quick_insertion_sort_hybrid, call_quicksort_so]
 
 LIST_OF_40 = [82, 8, 5, 13, 11, 14, 14, 21, 97, 29, 32, 33, 39, 70, 73, 74, 91, 47, 44, 43, 42, 41, 40, 83, 73, 53, 68,
               67, 54, 81, 90, 63, 99, 100, 47, 55, 81, 82, 81, 53, ]

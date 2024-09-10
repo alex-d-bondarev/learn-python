@@ -1,7 +1,7 @@
 from collections import Counter
 
 
-def counting_sort_simple(list_to_sort):
+def counting_sort(list_to_sort):
     max_value = max(list_to_sort)
     counter = [0] * (max_value + 1)
 
@@ -11,6 +11,23 @@ def counting_sort_simple(list_to_sort):
     sorted_list = list()
     for index, counted in enumerate(counter):
         sorted_list = sorted_list + [index] * counted
+
+    return sorted_list
+
+
+def counting_sort_v2(list_to_sort):
+    max_value = max(list_to_sort)
+    counter = [0] * (max_value + 1)
+    sorted_list = [0] * len(list_to_sort)
+    insert_index = 0
+
+    for value in list_to_sort:
+        counter[value] += 1
+
+    for index, counted in enumerate(counter):
+        for _ in range(counted):
+            sorted_list[insert_index] = index
+            insert_index += 1
 
     return sorted_list
 
