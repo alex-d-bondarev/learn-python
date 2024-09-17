@@ -58,10 +58,9 @@ def quick_insertion_sort_hybrid(list_to_sort):
         quick_sort_for_hybrid(list_to_sort)
     return list_to_sort
 
-# From https://stackoverflow.com/a/71086616/8661297
-
 
 def insertion_sort_so(arr, low, high):
+    # This and below are from https://stackoverflow.com/a/71086616/8661297
     for i in range(low + 1, high + 1):
         j = i
         while j > low and arr[j] < arr[j - 1]:
@@ -80,9 +79,6 @@ def quicksort_so(a, low=0, high=None):
             return
         # Size of the subarray is greater than the threshold, quicksort
         pivot_index = partition_for_hybrid(a, low, high)
-        print("The pivot_index is:", pivot_index)
-        print("Low is:", low)
-        print("High is:", high)
         quicksort_so(a, low, pivot_index - 1)
         quicksort_so(a, pivot_index + 1, high)
 

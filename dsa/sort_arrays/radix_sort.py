@@ -1,5 +1,5 @@
 def simple_rad_sort(list_to_sort):
-    radix_buckets = [[], [], [], [], [], [], [], [], [], []]
+    radix_buckets = [[] for _ in range(10)]
     list_length = len(list_to_sort)
     max_num = max(list_to_sort)
     slice_index = 1
@@ -21,7 +21,7 @@ def simple_rad_sort(list_to_sort):
 
 def rad_sort_w3c(my_array):
     # From https://www.w3schools.com/dsa/dsa_algo_radixsort.php
-    radix_array = [[], [], [], [], [], [], [], [], [], []]
+    radix_array = [[] for _ in range(10)]
     max_val = max(my_array)
     exp = 1
 
