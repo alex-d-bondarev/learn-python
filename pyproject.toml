@@ -48,8 +48,9 @@ ignore = [
    "DTZ007", "DTZ004", "DTZ003", "PLW0603", # Skipped for now but pending refinement!
    "FIX002", # Keeping To Do in code
    "TCH001", # Not sure which is the fix for @dataclass
-   "F811", "RUF100", # Ruff thinks that pytest fixtures are not used
-   "FA100", # We should not aim to support python < 3.10
+   "F811", # Ruff thinks that pytest fixtures are not used
+   "FA100", "FA102", # We should not aim to support python < 3.10
    "D105", # Dunder methods are usually self-explaining
-   "PYI025", # This would cause type hints to be longer and less readable
+   "PYI025", # IMHO this would cause type hints to be longer and less readable
 ]
+
