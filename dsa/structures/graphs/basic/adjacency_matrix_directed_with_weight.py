@@ -1,7 +1,9 @@
 from typing import Optional
 
+from dsa.structures.graphs.basic.adjacency_matrix_traverser import MyAdjMatrTraverser
 
-class MyAMDWWGraph:
+
+class MyAdjMatrDirWeightedGraph:
     def __init__(self):
         self.graph: list[list[Optional[int]]] = [[None]]
         self.size = 1
@@ -11,7 +13,7 @@ class MyAMDWWGraph:
 
     def add_edge(
         self, first_vertex: int, second_vertex: int, weight: int
-    ) -> "MyAMDWWGraph":
+    ) -> "MyAdjMatrDirWeightedGraph":
         max_required_size = max(first_vertex, second_vertex) + 1
 
         if self.size < max_required_size:
@@ -48,41 +50,17 @@ class MyAMDWWGraph:
 
     def traverse_bfs(self, start) -> list:
         """Breadth First Search Traversal"""
-        visited = [False for _ in range(self.size)]
-        to_visit = [start]
-        result = []
-
-        while len(to_visit) > 0:
-            current = to_visit.pop(0)
-            if not visited[current]:
-                visited[current] = True
-                result.append(current)
-                for index, value in enumerate(self.graph[current]):
-                    if value == 1:
-                        to_visit.append(index)
-
-        return result
+        traverser = MyAdjMatrTraverser(graph=self.graph, size=self.size)
+        return traverser.traverse_bfs(start=start)
 
     def traverse_dfs(self, start) -> list:
         """Depth First Search Traversal"""
-        visited = [False for _ in range(self.size)]
-        result = []
-
-        self._traverse_dfs(start, visited, result)
-
-        return result
-
-    def _traverse_dfs(self, vertex, visited, result):
-        visited[vertex] = True
-        result.append(vertex)
-
-        for i in range(0, self.size):
-            if self.graph[vertex][i] == 1 and not visited[i]:
-                self._traverse_dfs(i, visited, result)
+        traverser = MyAdjMatrTraverser(graph=self.graph, size=self.size)
+        return traverser.traverse_dfs(start=start)
 
 
 def test_connections():
-    g = MyAMDWWGraph()
+    g = MyAdjMatrDirWeightedGraph()
 
     g.add_edge(1, 2, 10).add_edge(9, 10, 99)
 
@@ -97,7 +75,7 @@ def test_connections():
 
 
 def test_traversal():
-    g = MyAMDWWGraph()
+    g = MyAdjMatrDirWeightedGraph()
     g.add_edge(1, 2, 1).add_edge(9, 10, 1)
 
     (
