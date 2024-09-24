@@ -46,6 +46,40 @@ class MyAMDWWGraph:
 
         return None
 
+    def traverse_bfs(self, start) -> list:
+        """Breadth First Search Traversal"""
+        visited = [False for _ in range(self.size)]
+        to_visit = [start]
+        result = []
+
+        while len(to_visit) > 0:
+            current = to_visit.pop(0)
+            if not visited[current]:
+                visited[current] = True
+                result.append(current)
+                for index, value in enumerate(self.graph[current]):
+                    if value == 1:
+                        to_visit.append(index)
+
+        return result
+
+    def traverse_dfs(self, start) -> list:
+        """Depth First Search Traversal"""
+        visited = [False for _ in range(self.size)]
+        result = []
+
+        self._traverse_dfs(start, visited, result)
+
+        return result
+
+    def _traverse_dfs(self, vertex, visited, result):
+        visited[vertex] = True
+        result.append(vertex)
+
+        for i in range(0, self.size):
+            if self.graph[vertex][i] == 1 and not visited[i]:
+                self._traverse_dfs(i, visited, result)
+
 
 def test_connections():
     g = MyAMDWWGraph()
@@ -60,3 +94,25 @@ def test_connections():
     assert g.are_connected(1, 9) is False
     assert g.are_connected(20, 30) is False
     assert g.get_size() == 11
+
+
+def test_traversal():
+    g = MyAMDWWGraph()
+    g.add_edge(1, 2, 1).add_edge(9, 10, 1)
+
+    (
+        g.add_edge(1, 4, 1)
+        .add_edge(1, 15, 1)
+        .add_edge(2, 4, 1)
+        .add_edge(3, 2, 1)
+        .add_edge(3, 5, 1)
+        .add_edge(3, 7, 1)
+        .add_edge(4, 4, 1)
+        .add_edge(4, 6, 1)
+        .add_edge(15, 8, 6)
+        .add_edge(15, 8, 1)
+        .add_edge(15, 20, 1)
+    )
+
+    assert g.traverse_bfs(1) == [1, 2, 4, 15, 6, 8, 20]
+    assert g.traverse_dfs(1) == [1, 2, 4, 6, 15, 8, 20]
