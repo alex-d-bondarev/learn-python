@@ -1,11 +1,11 @@
-class MyALUGraph:
+class MyAdjListUndirectedGraph:
     def __init__(self):
         self.a_list = [[]]
 
     def get_size(self):
         return len(self.a_list)
 
-    def add_edge(self, first_vertex: int, second_vertex: int) -> "MyALUGraph":
+    def add_edge(self, first_vertex: int, second_vertex: int) -> "MyAdjListUndirectedGraph":
         max_required_size = max(first_vertex, second_vertex) + 1
 
         if self.get_size() < max_required_size:
@@ -67,7 +67,7 @@ class MyALUGraph:
 
 
 def test_connections():
-    g = MyALUGraph()
+    g = MyAdjListUndirectedGraph()
 
     g.add_edge(1, 2).add_edge(9, 10)
 
@@ -78,7 +78,7 @@ def test_connections():
 
 
 def test_traversal():
-    g = MyALUGraph()
+    g = MyAdjListUndirectedGraph()
     g.add_edge(1, 2).add_edge(9, 10)
 
     (

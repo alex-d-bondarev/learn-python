@@ -20,9 +20,9 @@ class MyAdjMatrTraverser:
             if not visited[current]:
                 visited[current] = True
                 result.append(current)
-                for index, value in enumerate(self.graph[current]):
-                    if value == 1:
-                        to_visit.append(index)
+                for target, weight in enumerate(self.graph[current]):
+                    if weight and weight > 0:
+                        to_visit.append(target)
 
         return result
 
@@ -40,5 +40,5 @@ class MyAdjMatrTraverser:
         result.append(vertex)
 
         for i in range(0, self.size):
-            if self.graph[vertex][i] == 1 and not visited[i]:
+            if self.graph[vertex][i] and self.graph[vertex][i] > 0 and not visited[i]:
                 self._traverse_dfs(i, visited, result)
