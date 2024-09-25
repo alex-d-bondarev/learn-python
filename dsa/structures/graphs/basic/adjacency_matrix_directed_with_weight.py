@@ -3,15 +3,15 @@ from typing import Optional
 
 from dsa.structures.graphs.basic.adjacency_matrix_traverser import MyAdjMatrTraverser
 from dsa.structures.graphs.basic.dijkstra_shortest_path import DijkstraShortestPath
-from dsa.structures.graphs.basic.graph_iterator import MyGraphIterator
+from dsa.structures.graphs.basic.with_iterable_subgraph import WithIterableSubGraph
 
 
-class MyAdjMatrDirWeightedGraph(MyGraphIterator):
+class MyAdjMatrDirWeightedGraph(WithIterableSubGraph):
     def __init__(self):
         self.graph: list[list[Optional[int]]] = [[None]]
         self.size = 1
 
-    def sub_graph_iterator(self, index) -> Iterable[tuple[int, int]]:
+    def get_iterable_subgraph(self, index) -> Iterable[tuple[int, int]]:
         return enumerate(self.graph[index])
 
     def get_size(self) -> int:

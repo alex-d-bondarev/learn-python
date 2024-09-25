@@ -1,6 +1,12 @@
-class MyAdjListUndirectedGraph:
+from dsa.structures.graphs.basic.abc_base_graph import BaseGraph
+
+
+class MyAdjListUndirectedGraph(BaseGraph):
     def __init__(self):
         self.a_list = [[]]
+
+    def get_targets(self, start) -> list:
+        return self.a_list[start]
 
     def get_size(self):
         return len(self.a_list)
@@ -33,37 +39,13 @@ class MyAdjListUndirectedGraph:
         else:
             return target in self.a_list[start]
 
-    def traverse_bfs(self, start) -> list:
-        """Breadth First Search Traversal"""
-        result = []
-        visited = [False for _ in range(self.get_size())]
-        to_visit = [start]
-
-        while len(to_visit) > 0:
-            current = to_visit.pop(0)
-            if not visited[current]:
-                visited[current] = True
-                result.append(current)
-                to_visit += self.a_list[current]
-
-        return result
-
-    def traverse_dfs(self, start) -> list:
-        """Depth First Search Traversal"""
-        visited = [False for _ in range(self.get_size())]
-        result = []
-
-        self._traverse_dfs(start, visited, result)
-
-        return result
-
-    def _traverse_dfs(self, vertex, visited, result):
+    def _traverse_dfs_recursively(self, vertex, visited, result):
         visited[vertex] = True
         result.append(vertex)
 
         for next_v in self.a_list[vertex]:
             if not visited[next_v]:
-                self._traverse_dfs(next_v, visited, result)
+                self._traverse_dfs_recursively(next_v, visited, result)
 
 
 def test_connections():

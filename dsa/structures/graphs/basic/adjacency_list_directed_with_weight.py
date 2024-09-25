@@ -1,15 +1,19 @@
 from collections.abc import Iterable
 from typing import Optional
 
+from dsa.structures.graphs.basic.abc_base_graph import BaseGraph
 from dsa.structures.graphs.basic.dijkstra_shortest_path import DijkstraShortestPath
-from dsa.structures.graphs.basic.graph_iterator import MyGraphIterator
+from dsa.structures.graphs.basic.with_iterable_subgraph import WithIterableSubGraph
 
 
-class MyAdjListDirectedWeightedGraph(MyGraphIterator):
+class MyAdjListDirectedWeightedGraph(BaseGraph, WithIterableSubGraph):
     def __init__(self):
         self.a_list = [[]]
 
-    def sub_graph_iterator(self, index) -> Iterable[tuple[int, int]]:
+    def get_targets(self, start) -> list:
+        return [target for target, _ in self.a_list[start]]
+
+    def get_iterable_subgraph(self, index) -> Iterable[tuple[int, int]]:
         return self.a_list[index]
 
     def get_size(self):
@@ -54,37 +58,13 @@ class MyAdjListDirectedWeightedGraph(MyGraphIterator):
                     return weight
         return None
 
-    def traverse_bfs(self, start) -> list:
-        """Breadth First Search Traversal"""
-        visited = [False for _ in range(self.get_size())]
-        to_visit = [start]
-        result = []
-
-        while len(to_visit) > 0:
-            current = to_visit.pop(0)
-            if not visited[current]:
-                visited[current] = True
-                result.append(current)
-                to_visit += [target for target, _ in self.a_list[current]]
-
-        return result
-
-    def traverse_dfs(self, start) -> list:
-        """Depth First Search Traversal"""
-        visited = [False for _ in range(self.get_size())]
-        result = []
-
-        self._traverse_dfs(start, visited, result)
-
-        return result
-
-    def _traverse_dfs(self, vertex, visited, result):
+    def _traverse_dfs_recursively(self, vertex, visited, result):
         visited[vertex] = True
         result.append(vertex)
 
         for next_v, _ in self.a_list[vertex]:
             if not visited[next_v]:
-                self._traverse_dfs(next_v, visited, result)
+                self._traverse_dfs_recursively(next_v, visited, result)
 
     def dijkstra(self, start) -> list:
         return DijkstraShortestPath.get_all_distances(self, start)

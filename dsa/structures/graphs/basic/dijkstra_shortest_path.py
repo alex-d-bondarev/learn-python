@@ -1,16 +1,16 @@
-from dsa.structures.graphs.basic.graph_iterator import MyGraphIterator
+from dsa.structures.graphs.basic.with_iterable_subgraph import WithIterableSubGraph
 
 
 class DijkstraShortestPath:
     @staticmethod
-    def get_all_distances(graph: MyGraphIterator, start) -> list:
+    def get_all_distances(graph: WithIterableSubGraph, start) -> list:
         distances = [float("inf")] * graph.get_size()
         distances[start] = 0
         to_visit = [start]
 
         while len(to_visit) > 0:
             current = to_visit.pop()
-            for target, weight in graph.sub_graph_iterator(current):
+            for target, weight in graph.get_iterable_subgraph(current):
                 if weight and weight > 0:
                     distance = distances[current] + weight
                     if distance < distances[target]:
@@ -21,7 +21,7 @@ class DijkstraShortestPath:
 
     @staticmethod
     def get_path(
-        graph: MyGraphIterator, start_vertex, target_vertex
+        graph: WithIterableSubGraph, start_vertex, target_vertex
     ) -> tuple[int | float, list]:
         distances, predecessors = (
             DijkstraShortestPath._dijkstra_distances_and_predecessors(graph, start_vertex)
@@ -35,7 +35,7 @@ class DijkstraShortestPath:
 
     @staticmethod
     def _dijkstra_distances_and_predecessors(
-        graph: MyGraphIterator, start_vertex
+        graph: WithIterableSubGraph, start_vertex
     ) -> tuple[list, list]:
         distances = [float("inf")] * graph.get_size()
         distances[start_vertex] = 0
@@ -44,7 +44,7 @@ class DijkstraShortestPath:
         to_visit = [start_vertex]
         while len(to_visit) > 0:
             current = to_visit.pop()
-            for target, weight in graph.sub_graph_iterator(current):
+            for target, weight in graph.get_iterable_subgraph(current):
                 if weight and weight > 0:
                     distance = distances[current] + weight
                     if distance < distances[target]:
