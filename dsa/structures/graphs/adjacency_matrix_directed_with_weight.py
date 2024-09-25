@@ -1,9 +1,9 @@
 from collections.abc import Iterable
 from typing import Optional
 
-from dsa.structures.graphs.basic.adjacency_matrix_traverser import MyAdjMatrTraverser
-from dsa.structures.graphs.basic.dijkstra_shortest_path import DijkstraShortestPath
-from dsa.structures.graphs.basic.with_iterable_subgraph import WithIterableSubGraph
+from dsa.structures.graphs.adjacency_matrix_traverser import MyAdjMatrTraverser
+from dsa.structures.graphs.dijkstra_shortest_path import DijkstraShortestPath
+from dsa.structures.graphs.with_iterable_subgraph import WithIterableSubGraph
 
 
 class MyAdjMatrDirWeightedGraph(WithIterableSubGraph):

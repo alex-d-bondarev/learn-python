@@ -1,4 +1,4 @@
-from dsa.structures.graphs.basic.with_iterable_subgraph import WithIterableSubGraph
+from dsa.structures.graphs.with_iterable_subgraph import WithIterableSubGraph
 
 
 class DijkstraShortestPath:

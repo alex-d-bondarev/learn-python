@@ -1,6 +1,6 @@
 from typing import Optional
 
-from dsa.structures.graphs.basic.adjacency_matrix_traverser import MyAdjMatrTraverser
+from dsa.structures.graphs.adjacency_matrix_traverser import MyAdjMatrTraverser
 
 
 class MyAdjMatrUndirGraph:
