@@ -1,9 +1,16 @@
+from collections.abc import Iterable
 from typing import Optional
 
+from dsa.structures.graphs.basic.dijkstra_shortest_path import DijkstraShortestPath
+from dsa.structures.graphs.basic.graph_iterator import MyGraphIterator
 
-class MyAdjListDirectedWeightedGraph:
+
+class MyAdjListDirectedWeightedGraph(MyGraphIterator):
     def __init__(self):
         self.a_list = [[]]
+
+    def sub_graph_iterator(self, index) -> Iterable[tuple[int, int]]:
+        return self.a_list[index]
 
     def get_size(self):
         return len(self.a_list)
@@ -80,55 +87,10 @@ class MyAdjListDirectedWeightedGraph:
                 self._traverse_dfs(next_v, visited, result)
 
     def dijkstra(self, start) -> list:
-        distances = [float("inf")] * self.get_size()
-        distances[start] = 0
-        to_visit = [start]
-
-        while len(to_visit) > 0:
-            current = to_visit.pop()
-            for target, weight in self.a_list[current]:
-                if weight and weight > 0:
-                    distance = distances[current] + weight
-                    if distance < distances[target]:
-                        distances[target] = distance
-                        to_visit.append(target)
-
-        return distances
+        return DijkstraShortestPath.get_all_distances(self, start)
 
     def dijkstra_path(self, start_vertex, target_vertex) -> tuple[int | float, list]:
-        distances, predecessors = self._dijkstra_distances_and_predecessors(start_vertex)
-        distance = distances[target_vertex]
-
-        if distance == float("inf"):
-            return float("inf"), []
-
-        return distance, self._prepare_path(predecessors, target_vertex)
-
-    def _dijkstra_distances_and_predecessors(self, start_vertex) -> tuple[list, list]:
-        distances = [float("inf")] * self.size
-        distances[start_vertex] = 0
-        predecessors = [None for _ in range(self.size)]
-
-        to_visit = [start_vertex]
-        while len(to_visit) > 0:
-            current = to_visit.pop()
-            for target, weight in self.a_list[current]:
-                if weight and weight > 0:
-                    distance = distances[current] + weight
-                    if distance < distances[target]:
-                        distances[target] = distance
-                        predecessors[target] = current
-                        to_visit.append(target)
-
-        return distances, predecessors
-
-    def _prepare_path(self, predecessors, target_vertex):
-        predecessor = target_vertex
-        path = []
-        while predecessor:
-            path.append(predecessor)
-            predecessor = predecessors[predecessor]
-        return list(reversed(path))
+        return DijkstraShortestPath.get_path(self, start_vertex, target_vertex)
 
 
 def test_connections():

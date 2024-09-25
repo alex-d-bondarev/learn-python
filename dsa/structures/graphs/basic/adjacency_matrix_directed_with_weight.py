@@ -1,14 +1,20 @@
+from collections.abc import Iterable
 from typing import Optional
 
 from dsa.structures.graphs.basic.adjacency_matrix_traverser import MyAdjMatrTraverser
+from dsa.structures.graphs.basic.dijkstra_shortest_path import DijkstraShortestPath
+from dsa.structures.graphs.basic.graph_iterator import MyGraphIterator
 
 
-class MyAdjMatrDirWeightedGraph:
+class MyAdjMatrDirWeightedGraph(MyGraphIterator):
     def __init__(self):
         self.graph: list[list[Optional[int]]] = [[None]]
         self.size = 1
 
-    def get_size(self):
+    def sub_graph_iterator(self, index) -> Iterable[tuple[int, int]]:
+        return enumerate(self.graph[index])
+
+    def get_size(self) -> int:
         return self.size
 
     def add_edge(
@@ -58,56 +64,11 @@ class MyAdjMatrDirWeightedGraph:
         traverser = MyAdjMatrTraverser(graph=self.graph, size=self.size)
         return traverser.traverse_dfs(start=start)
 
-    def dijkstra(self, start) -> list:
-        distances = [float("inf")] * self.size
-        distances[start] = 0
-        to_visit = [start]
-
-        while len(to_visit) > 0:
-            current = to_visit.pop()
-            for target, weight in enumerate(self.graph[current]):
-                if weight and weight > 0:
-                    distance = distances[current] + weight
-                    if distance < distances[target]:
-                        distances[target] = distance
-                        to_visit.append(target)
-
-        return distances
+    def dijkstra_distances(self, start) -> list:
+        return DijkstraShortestPath.get_all_distances(self, start)
 
     def dijkstra_path(self, start_vertex, target_vertex) -> tuple[int | float, list]:
-        distances, predecessors = self._dijkstra_distances_and_predecessors(start_vertex)
-        distance = distances[target_vertex]
-
-        if distance == float("inf"):
-            return float("inf"), []
-
-        return distance, self._prepare_path(predecessors, target_vertex)
-
-    def _dijkstra_distances_and_predecessors(self, start_vertex) -> tuple[list, list]:
-        distances = [float("inf")] * self.size
-        distances[start_vertex] = 0
-        predecessors = [None for _ in range(self.size)]
-
-        to_visit = [start_vertex]
-        while len(to_visit) > 0:
-            current = to_visit.pop()
-            for target, weight in enumerate(self.graph[current]):
-                if weight and weight > 0:
-                    distance = distances[current] + weight
-                    if distance < distances[target]:
-                        distances[target] = distance
-                        predecessors[target] = current
-                        to_visit.append(target)
-
-        return distances, predecessors
-
-    def _prepare_path(self, predecessors, target_vertex):
-        predecessor = target_vertex
-        path = []
-        while predecessor:
-            path.append(predecessor)
-            predecessor = predecessors[predecessor]
-        return list(reversed(path))
+        return DijkstraShortestPath.get_path(self, start_vertex, target_vertex)
 
 
 def test_connections():
@@ -161,5 +122,5 @@ def test_dijkstra():
         .add_edge(7, 8, 10)
     )
 
-    assert g.dijkstra(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
+    assert g.dijkstra_distances(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
     assert g.dijkstra_path(1, 7) == (14, [1, 2, 6, 3, 7])
