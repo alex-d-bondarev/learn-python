@@ -11,14 +11,14 @@ class MyAdjMatrUndirGraph:
     def get_size(self):
         return self.size
 
-    def add_edge(self, first_vertex: int, second_vertex: int) -> "MyAdjMatrUndirGraph":
-        max_required_size = max(first_vertex, second_vertex) + 1
+    def add_edge(self, start: int, target: int) -> "MyAdjMatrUndirGraph":
+        max_required_size = max(start, target) + 1
 
         if self.size < max_required_size:
             self._resize(max_required_size)
 
-        self.graph[first_vertex][second_vertex] = 1
-        self.graph[second_vertex][first_vertex] = 1
+        self.graph[start][target] = 1
+        self.graph[target][start] = 1
 
         return self
 
@@ -33,13 +33,13 @@ class MyAdjMatrUndirGraph:
 
         self.size = new_size
 
-    def are_connected(self, first_vertex: int, second_vertex: int) -> bool:
-        max_vertex = max(first_vertex, second_vertex)
+    def are_connected(self, start: int, target: int) -> bool:
+        max_vertex = max(start, target)
 
         if max_vertex > self.size:
             return False
         else:
-            return self.graph[first_vertex][second_vertex] == 1
+            return self.graph[start][target] == 1
 
     def traverse_bfs(self, start) -> list:
         """Breadth First Search Traversal"""

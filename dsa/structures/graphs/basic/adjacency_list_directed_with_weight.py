@@ -16,14 +16,14 @@ class MyAdjListDirectedWeightedGraph(MyGraphIterator):
         return len(self.a_list)
 
     def add_edge(
-        self, first_vertex: int, second_vertex: int, weight: int
+        self, start: int, target: int, weight: int
     ) -> "MyAdjListDirectedWeightedGraph":
-        max_required_size = max(first_vertex, second_vertex) + 1
+        max_required_size = max(start, target) + 1
 
         if self.get_size() < max_required_size:
             self._resize(max_required_size)
 
-        self.a_list[first_vertex].append((second_vertex, weight))
+        self.a_list[start].append((target, weight))
 
         return self
 
@@ -32,40 +32,40 @@ class MyAdjListDirectedWeightedGraph(MyGraphIterator):
         self.a_list += [[] for _ in range(delta)]
         self.size = new_size
 
-    def are_connected(self, first_vertex: int, second_vertex: int) -> bool:
-        max_vertex = max(first_vertex, second_vertex)
+    def are_connected(self, start: int, target: int) -> bool:
+        max_vertex = max(start, target)
 
         if max_vertex > self.get_size():
             return False
         else:
-            for vertex, _ in self.a_list[first_vertex]:
-                if vertex == second_vertex:
+            for vertex, _ in self.a_list[start]:
+                if vertex == target:
                     return True
         return False
 
-    def connection_weight(self, first_vertex: int, second_vertex: int) -> Optional[int]:
-        max_vertex = max(first_vertex, second_vertex)
+    def connection_weight(self, start: int, target: int) -> Optional[int]:
+        max_vertex = max(start, target)
 
         if max_vertex > self.get_size():
             return False
         else:
-            for vertex, weight in self.a_list[first_vertex]:
-                if vertex == second_vertex:
+            for vertex, weight in self.a_list[start]:
+                if vertex == target:
                     return weight
         return None
 
     def traverse_bfs(self, start) -> list:
         """Breadth First Search Traversal"""
-        result = []
         visited = [False for _ in range(self.get_size())]
         to_visit = [start]
+        result = []
 
         while len(to_visit) > 0:
             current = to_visit.pop(0)
             if not visited[current]:
                 visited[current] = True
                 result.append(current)
-                to_visit += [index for index, _ in self.a_list[current]]
+                to_visit += [target for target, _ in self.a_list[current]]
 
         return result
 

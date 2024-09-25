@@ -18,14 +18,14 @@ class MyAdjMatrDirWeightedGraph(MyGraphIterator):
         return self.size
 
     def add_edge(
-        self, first_vertex: int, second_vertex: int, weight: int
+        self, start: int, target: int, weight: int
     ) -> "MyAdjMatrDirWeightedGraph":
-        max_required_size = max(first_vertex, second_vertex) + 1
+        max_required_size = max(start, target) + 1
 
         if self.size < max_required_size:
             self._resize(max_required_size)
 
-        self.graph[first_vertex][second_vertex] = weight
+        self.graph[start][target] = weight
 
         return self
 
@@ -40,17 +40,17 @@ class MyAdjMatrDirWeightedGraph(MyGraphIterator):
 
         self.size = new_size
 
-    def are_connected(self, first_vertex: int, second_vertex: int) -> bool:
-        max_vertex = max(first_vertex, second_vertex)
+    def are_connected(self, start: int, target: int) -> bool:
+        max_vertex = max(start, target)
 
         if max_vertex > self.get_size():
             return False
         else:
-            return self.graph[first_vertex][second_vertex] is not None
+            return self.graph[start][target] is not None
 
-    def connection_weight(self, first_vertex: int, second_vertex: int) -> Optional[int]:
-        if self.are_connected(first_vertex, second_vertex):
-            return self.graph[first_vertex][second_vertex]
+    def connection_weight(self, start: int, target: int) -> Optional[int]:
+        if self.are_connected(start, target):
+            return self.graph[start][target]
 
         return None
 

@@ -5,18 +5,18 @@ class MyAdjListUndirectedGraph:
     def get_size(self):
         return len(self.a_list)
 
-    def add_edge(self, first_vertex: int, second_vertex: int) -> "MyAdjListUndirectedGraph":
-        max_required_size = max(first_vertex, second_vertex) + 1
+    def add_edge(self, start: int, target: int) -> "MyAdjListUndirectedGraph":
+        max_required_size = max(start, target) + 1
 
         if self.get_size() < max_required_size:
             self._resize(max_required_size)
 
-        self.a_list[first_vertex].append(second_vertex)
-        self.a_list[first_vertex] = sorted(self.a_list[first_vertex])
+        self.a_list[start].append(target)
+        self.a_list[start] = sorted(self.a_list[start])
 
-        if first_vertex != second_vertex:
-            self.a_list[second_vertex].append(first_vertex)
-            self.a_list[second_vertex] = sorted(self.a_list[second_vertex])
+        if start != target:
+            self.a_list[target].append(start)
+            self.a_list[target] = sorted(self.a_list[target])
 
         return self
 
@@ -25,13 +25,13 @@ class MyAdjListUndirectedGraph:
         self.a_list += [[] for _ in range(delta)]
         self.size = new_size
 
-    def are_connected(self, first_vertex: int, second_vertex: int) -> bool:
-        max_vertex = max(first_vertex, second_vertex)
+    def are_connected(self, start: int, target: int) -> bool:
+        max_vertex = max(start, target)
 
         if max_vertex > self.get_size():
             return False
         else:
-            return second_vertex in self.a_list[first_vertex]
+            return target in self.a_list[start]
 
     def traverse_bfs(self, start) -> list:
         """Breadth First Search Traversal"""
