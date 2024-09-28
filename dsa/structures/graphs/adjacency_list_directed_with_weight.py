@@ -75,8 +75,41 @@ class MyAdjListDirectedWeightedGraph(GraphWithIterableSubGraph):
     def dijkstra_path(self, start_vertex, target_vertex) -> tuple[int | float, list]:
         return DijkstraShortestPath.get_path(self, start_vertex, target_vertex)
 
-    def dijkstra_narrowed_path(self, start_vertex, target_vertex) -> tuple[int | float, list]:
+    def dijkstra_narrowed_path(
+        self, start_vertex, target_vertex
+    ) -> tuple[int | float, list]:
         return DijkstraShortestPath.get_narrowed_path(self, start_vertex, target_vertex)
+
+    def bellman_ford_path(self, start_vertex, target_vertex) -> tuple[int | float, list]:
+        graph_size = self.get_size()
+        sweeps = 0
+        did_update = True
+
+        results = [(None, float("inf"))] * graph_size  # predecessor, distance
+        results[start_vertex] = (None, 0)
+
+        while did_update and sweeps < graph_size:
+            did_update = False
+
+            for vertex_inx in range(graph_size):
+                current, distance = results[vertex_inx]
+                for target, weight in self.a_list[vertex_inx]:
+                    target_predecessor, target_distance = results[target]
+                    new_distance = distance + weight
+
+                    if new_distance < target_distance:
+                        did_update = True
+                        results[target] = (vertex_inx, new_distance)
+
+            sweeps += 1
+
+        predecessor, distance = results[target_vertex]
+        path = [target_vertex]
+
+        while predecessor:
+            path.append(predecessor)
+            predecessor, _ = results[predecessor]
+        return distance, list(reversed(path))
 
 
 def test_connections():
@@ -154,3 +187,4 @@ def test_graph_with_negative_weights():
     assert g.naive_distances(1) == [float("inf"), 0, 50, 5, 30, 10, 40, 20, 20]
     assert g.dijkstra_path(1, 3) == (30, [1, 8, 5, 3])
     assert g.dijkstra_narrowed_path(1, 3) == (25, [1, 2, 6, 4, 3])
+    assert g.bellman_ford_path(1, 3) == (5, [1, 2, 6, 8, 5, 3])
