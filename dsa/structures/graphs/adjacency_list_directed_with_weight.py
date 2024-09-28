@@ -103,6 +103,9 @@ class MyAdjListDirectedWeightedGraph(GraphWithIterableSubGraph):
 
             sweeps += 1
 
+        if sweeps == graph_size:
+            return float("inf"), []
+
         predecessor, distance = results[target_vertex]
         path = [target_vertex]
 
