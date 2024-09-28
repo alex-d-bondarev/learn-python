@@ -2,12 +2,12 @@ from collections.abc import Iterable
 from typing import Optional
 
 from dijkstra_shortest_path import DijkstraShortestPath
-from with_iterable_subgraph import WithIterableSubGraph
+from with_iterable_subgraph import GraphWithIterableSubGraph
 
 from dsa.structures.graphs.adjacency_matrix_traverser import MyAdjMatrTraverser
 
 
-class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, WithIterableSubGraph):
+class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, GraphWithIterableSubGraph):
     def __init__(self):
         super().__init__(graph=[[None]], size=1)
 
@@ -62,6 +62,9 @@ class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, WithIterableSubGraph):
 
     def dijkstra_path(self, start_vertex, target_vertex) -> tuple[int | float, list]:
         return DijkstraShortestPath.get_path(self, start_vertex, target_vertex)
+
+    def dijkstra_narrowed_path(self, start_vertex, target_vertex) -> tuple[int | float, list]:
+        return DijkstraShortestPath.get_narrowed_path(self, start_vertex, target_vertex)
 
 
 def test_connections():
@@ -119,3 +122,4 @@ def test_dijkstra():
     assert g.dijkstra_min_heap(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
 
     assert g.dijkstra_path(1, 7) == (14, [1, 2, 6, 3, 7])
+    assert g.dijkstra_narrowed_path(1, 7) == (14, [1, 2, 6, 3, 7])

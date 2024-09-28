@@ -26,7 +26,7 @@ select = ["ALL"]
 
 ignore = [
    "S101", # Assers are needed
-   "ANN001", # Force typing, Open to discussion... I think it might be a bit too much to refactor
+   "ANN001", "ANN205", # Force typing, Open to discussion... I think it might be a bit too much to refactor
    "ANN201", # Tests do not need to return anything,
    "D103", "D102", "D200", # Open to discussion. I think is a good investment
    "D100", "D415", "D212", "D205", "D210", "D104",  # This might be really too much
@@ -40,7 +40,6 @@ ignore = [
    "C408", # Does not work quite nice with pytest converters
    "FBT002", # I think this one can be discussed. I don't personally thing is a good one to have
    "FBT001", "FBT003", # Ignored for now but I'd put this one as mandatory, so that we use keyword-only arguments
-   "F405", "F403", # A bit too much for pytest, as conftest make a lot of work for us
    "F401", # `gnp_tests_lib.utils.environment.Environment` imported but unused -> Might be in a conftest...
    "B008", # Ignored for now but I'd put this one as mandatory.
    "S311", # Standard pseudo-random generators are not suitable for cryptographic purpose
@@ -52,5 +51,6 @@ ignore = [
    "FA100", "FA102", # We should not aim to support python < 3.10
    "D105", # Dunder methods are usually self-explaining
    "PYI025", # IMHO this would cause type hints to be longer and less readable
+   "D400", # docstrings are overated
 ]
 
