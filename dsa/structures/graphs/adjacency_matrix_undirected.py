@@ -3,10 +3,9 @@ from typing import Optional
 from dsa.structures.graphs.adjacency_matrix_traverser import MyAdjMatrTraverser
 
 
-class MyAdjMatrUndirGraph:
+class MyAdjMatrUndirGraph(MyAdjMatrTraverser):
     def __init__(self):
-        self.graph: list[list[Optional[int]]] = [[None]]
-        self.size = 1
+        super().__init__(graph=[[None]], size=1)
 
     def get_size(self):
         return self.size
@@ -40,16 +39,6 @@ class MyAdjMatrUndirGraph:
             return False
         else:
             return self.graph[start][target] == 1
-
-    def traverse_bfs(self, start) -> list:
-        """Breadth First Search Traversal"""
-        traverser = MyAdjMatrTraverser(graph=self.graph, size=self.size)
-        return traverser.traverse_bfs(start=start)
-
-    def traverse_dfs(self, start) -> list:
-        """Depth First Search Traversal"""
-        traverser = MyAdjMatrTraverser(graph=self.graph, size=self.size)
-        return traverser.traverse_dfs(start=start)
 
 
 def test_connections():

@@ -1,15 +1,15 @@
 from collections.abc import Iterable
 from typing import Optional
 
+from dijkstra_shortest_path import DijkstraShortestPath
+from with_iterable_subgraph import WithIterableSubGraph
+
 from dsa.structures.graphs.adjacency_matrix_traverser import MyAdjMatrTraverser
-from dsa.structures.graphs.dijkstra_shortest_path import DijkstraShortestPath
-from dsa.structures.graphs.with_iterable_subgraph import WithIterableSubGraph
 
 
-class MyAdjMatrDirWeightedGraph(WithIterableSubGraph):
+class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, WithIterableSubGraph):
     def __init__(self):
-        self.graph: list[list[Optional[int]]] = [[None]]
-        self.size = 1
+        super().__init__(graph=[[None]], size=1)
 
     def get_iterable_subgraph(self, index) -> Iterable[tuple[int, int]]:
         return enumerate(self.graph[index])
@@ -54,18 +54,11 @@ class MyAdjMatrDirWeightedGraph(WithIterableSubGraph):
 
         return None
 
-    def traverse_bfs(self, start) -> list:
-        """Breadth First Search Traversal"""
-        traverser = MyAdjMatrTraverser(graph=self.graph, size=self.size)
-        return traverser.traverse_bfs(start=start)
-
-    def traverse_dfs(self, start) -> list:
-        """Depth First Search Traversal"""
-        traverser = MyAdjMatrTraverser(graph=self.graph, size=self.size)
-        return traverser.traverse_dfs(start=start)
-
     def dijkstra_distances(self, start) -> list:
         return DijkstraShortestPath.get_all_distances(self, start)
+
+    def dijkstra_min_heap(self, start) -> list:
+        return DijkstraShortestPath.get_all_distances_optimized(self, start)
 
     def dijkstra_path(self, start_vertex, target_vertex) -> tuple[int | float, list]:
         return DijkstraShortestPath.get_path(self, start_vertex, target_vertex)
@@ -123,4 +116,6 @@ def test_dijkstra():
     )
 
     assert g.dijkstra_distances(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
+    assert g.dijkstra_min_heap(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
+
     assert g.dijkstra_path(1, 7) == (14, [1, 2, 6, 3, 7])

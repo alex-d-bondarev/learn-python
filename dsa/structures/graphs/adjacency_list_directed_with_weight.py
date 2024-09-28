@@ -66,8 +66,11 @@ class MyAdjListDirectedWeightedGraph(BaseGraph, WithIterableSubGraph):
             if not visited[next_v]:
                 self._traverse_dfs_recursively(next_v, visited, result)
 
-    def dijkstra(self, start) -> list:
+    def dijkstra_distances(self, start) -> list:
         return DijkstraShortestPath.get_all_distances(self, start)
+
+    def dijkstra_min_heap(self, start) -> list:
+        return DijkstraShortestPath.get_all_distances_optimized(self, start)
 
     def dijkstra_path(self, start_vertex, target_vertex) -> tuple[int | float, list]:
         return DijkstraShortestPath.get_path(self, start_vertex, target_vertex)
@@ -124,5 +127,6 @@ def test_dijkstra():
         .add_edge(7, 8, 10)
     )
 
-    assert g.dijkstra(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
+    assert g.dijkstra_distances(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
+    assert g.dijkstra_min_heap(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
     assert g.dijkstra_path(1, 7) == (14, [1, 2, 6, 3, 7])

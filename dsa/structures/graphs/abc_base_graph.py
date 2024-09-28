@@ -3,15 +3,19 @@ from abc import ABC, abstractmethod
 
 class BaseGraph(ABC):
     @abstractmethod
+    def add_edge(self, *args, **kwargs) -> "BaseGraph":
+        pass
+
+    @abstractmethod
+    def are_connected(self, start: int, target: int) -> bool:
+        pass
+
+    @abstractmethod
     def get_targets(self, start) -> list:
         pass
 
     @abstractmethod
     def get_size(self) -> int:
-        pass
-
-    @abstractmethod
-    def are_connected(self, start: int, target: int) -> bool:
         pass
 
     @abstractmethod

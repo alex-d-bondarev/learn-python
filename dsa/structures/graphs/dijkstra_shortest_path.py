@@ -1,9 +1,12 @@
-from dsa.structures.graphs.with_iterable_subgraph import WithIterableSubGraph
+from heapq import heappop, heappush
+
+from abc_base_graph import BaseGraph
+from with_iterable_subgraph import WithIterableSubGraph
 
 
 class DijkstraShortestPath:
     @staticmethod
-    def get_all_distances(graph: WithIterableSubGraph, start) -> list:
+    def get_all_distances(graph: BaseGraph and WithIterableSubGraph, start) -> list:
         distances = [float("inf")] * graph.get_size()
         distances[start] = 0
         to_visit = [start]
@@ -16,6 +19,34 @@ class DijkstraShortestPath:
                     if distance < distances[target]:
                         distances[target] = distance
                         to_visit.append(target)
+
+        return distances
+
+    @staticmethod
+    def get_all_distances_optimized(
+        graph: BaseGraph and WithIterableSubGraph, start
+    ) -> list:
+        """Does fewer loop iterations compared to get_all_distances()"""
+        distances = [float("inf")] * graph.get_size()
+        distances[start] = 0
+        to_visit: list[tuple[int, int]] = []
+        visited = [False] * graph.get_size()
+
+        heappush(to_visit, (0, start))
+
+        while len(to_visit) > 0:
+            distance, current = heappop(to_visit)
+            if visited[current]:
+                continue
+
+            for target, weight in graph.get_iterable_subgraph(current):
+                if weight and weight > 0:
+                    new_distance = distance + weight
+                    if new_distance < distances[target]:
+                        distances[target] = new_distance
+                        heappush(to_visit, (new_distance, target))
+
+            visited[current] = True
 
         return distances
 
