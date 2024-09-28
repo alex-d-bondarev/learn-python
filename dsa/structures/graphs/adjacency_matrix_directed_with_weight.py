@@ -55,7 +55,7 @@ class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, GraphWithIterableSubGraph):
         return None
 
     def dijkstra_distances(self, start) -> list:
-        return DijkstraShortestPath.get_all_distances(self, start)
+        return DijkstraShortestPath.get_naive_distances(self, start)
 
     def dijkstra_min_heap(self, start) -> list:
         return DijkstraShortestPath.get_all_distances_optimized(self, start)

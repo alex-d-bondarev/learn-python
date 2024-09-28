@@ -4,22 +4,6 @@ from with_iterable_subgraph import GraphWithIterableSubGraph
 
 
 class DijkstraShortestPath:
-    @staticmethod
-    def get_all_distances(graph: GraphWithIterableSubGraph, start) -> list:
-        distances = [float("inf")] * graph.get_size()
-        distances[start] = 0
-        to_visit = [start]
-
-        while len(to_visit) > 0:
-            current = to_visit.pop()
-            for target, weight in graph.get_iterable_subgraph(current):
-                if weight and weight > 0:
-                    distance = distances[current] + weight
-                    if distance < distances[target]:
-                        distances[target] = distance
-                        to_visit.append(target)
-
-        return distances
 
     @staticmethod
     def get_all_distances_optimized(graph: GraphWithIterableSubGraph, start) -> list:
@@ -74,17 +58,21 @@ class DijkstraShortestPath:
         distances = [float("inf")] * graph.get_size()
         distances[start_vertex] = 0
         predecessors = [None for _ in range(graph.get_size())]
+        visited = [False for _ in range(graph.get_size())]
+        to_visit: list[tuple[int:int]] = [(0, start_vertex)]
 
-        to_visit = [start_vertex]
         while len(to_visit) > 0:
-            current = to_visit.pop()
+            distance, current = heappop(to_visit)
+            visited[current] = True
+
             for target, weight in graph.get_iterable_subgraph(current):
-                if weight and weight > 0:
-                    distance = distances[current] + weight
-                    if distance < distances[target]:
-                        distances[target] = distance
+                if weight:
+                    next_distance = distance + weight
+
+                    if not visited[target] and next_distance < distances[target]:
+                        distances[target] = next_distance
                         predecessors[target] = current
-                        to_visit.append(target)
+                        heappush(to_visit, (next_distance, target))
 
         return distances[target_vertex], predecessors
 
@@ -133,7 +121,7 @@ class DijkstraShortestPath:
             visited[current] = True
 
             for target, weight in graph.get_iterable_subgraph(current):
-                if weight and weight > 0:
+                if weight:
                     next_distance = distance + weight
 
                     if not visited[target] and next_distance < distances[target]:

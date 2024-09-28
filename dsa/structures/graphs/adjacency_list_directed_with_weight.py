@@ -2,6 +2,7 @@ from collections.abc import Iterable
 from typing import Optional
 
 from dsa.structures.graphs.dijkstra_shortest_path import DijkstraShortestPath
+from dsa.structures.graphs.my_naive_path import MyNaivePath
 from dsa.structures.graphs.with_iterable_subgraph import GraphWithIterableSubGraph
 
 
@@ -65,8 +66,8 @@ class MyAdjListDirectedWeightedGraph(GraphWithIterableSubGraph):
             if not visited[next_v]:
                 self._traverse_dfs_recursively(next_v, visited, result)
 
-    def dijkstra_distances(self, start) -> list:
-        return DijkstraShortestPath.get_all_distances(self, start)
+    def naive_distances(self, start) -> list:
+        return MyNaivePath.get_naive_distances(self, start)
 
     def dijkstra_min_heap(self, start) -> list:
         return DijkstraShortestPath.get_all_distances_optimized(self, start)
@@ -129,7 +130,27 @@ def test_dijkstra():
         .add_edge(7, 8, 10)
     )
 
-    assert g.dijkstra_distances(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
+    assert g.naive_distances(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
     assert g.dijkstra_min_heap(1) == [float("inf"), 0, 2, 9, 20, 5, 5, 14, 21]
     assert g.dijkstra_path(1, 7) == (14, [1, 2, 6, 3, 7])
     assert g.dijkstra_narrowed_path(1, 7) == (14, [1, 2, 6, 3, 7])
+
+
+def test_graph_with_negative_weights():
+    g = MyAdjListDirectedWeightedGraph()
+    (
+        g.add_edge(1, 2, 50)
+        .add_edge(1, 7, 20)
+        .add_edge(1, 8, 45)
+        .add_edge(2, 6, -10)
+        .add_edge(4, 3, -5)
+        .add_edge(5, 3, -5)
+        .add_edge(6, 4, -10)
+        .add_edge(6, 8, -20)
+        .add_edge(7, 3, 30)
+        .add_edge(8, 5, -10)
+        .add_edge(8, 7, 5)
+    )
+    assert g.naive_distances(1) == [float("inf"), 0, 50, 5, 30, 10, 40, 20, 20]
+    assert g.dijkstra_path(1, 3) == (30, [1, 8, 5, 3])
+    assert g.dijkstra_narrowed_path(1, 3) == (25, [1, 2, 6, 4, 3])
