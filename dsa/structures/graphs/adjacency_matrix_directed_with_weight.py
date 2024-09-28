@@ -2,6 +2,7 @@ from collections.abc import Iterable
 from typing import Optional
 
 from dijkstra_shortest_path import DijkstraShortestPath
+from dsa.structures.graphs.my_naive_path import MyNaivePath
 from with_iterable_subgraph import GraphWithIterableSubGraph
 
 from dsa.structures.graphs.adjacency_matrix_traverser import MyAdjMatrTraverser
@@ -55,7 +56,7 @@ class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, GraphWithIterableSubGraph):
         return None
 
     def dijkstra_distances(self, start) -> list:
-        return DijkstraShortestPath.get_naive_distances(self, start)
+        return MyNaivePath.get_naive_distances(self, start)
 
     def dijkstra_min_heap(self, start) -> list:
         return DijkstraShortestPath.get_all_distances_optimized(self, start)
