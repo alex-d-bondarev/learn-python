@@ -2,10 +2,10 @@ from collections.abc import Iterable
 from typing import Optional
 
 from dijkstra_shortest_path import DijkstraShortestPath
-from dsa.structures.graphs.my_naive_path import MyNaivePath
+from dsa.structures.graphs.shortest_path.my_naive_path import MyNaivePath
 from with_iterable_subgraph import GraphWithIterableSubGraph
 
-from dsa.structures.graphs.adjacency_matrix_traverser import MyAdjMatrTraverser
+from dsa.structures.graphs.shortest_path.adjacency_matrix_traverser import MyAdjMatrTraverser
 
 
 class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, GraphWithIterableSubGraph):

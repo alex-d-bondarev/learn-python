@@ -1,4 +1,4 @@
-from dsa.structures.graphs.abc_base_graph import BaseGraph
+from dsa.structures.graphs.shortest_path.abc_base_graph import BaseGraph
 
 
 class MyAdjListUndirectedGraph(BaseGraph):

@@ -1,9 +1,9 @@
 from collections.abc import Iterable
 from typing import Optional
 
-from dsa.structures.graphs.dijkstra_shortest_path import DijkstraShortestPath
-from dsa.structures.graphs.my_naive_path import MyNaivePath
-from dsa.structures.graphs.with_iterable_subgraph import GraphWithIterableSubGraph
+from dsa.structures.graphs.shortest_path.dijkstra_shortest_path import DijkstraShortestPath
+from dsa.structures.graphs.shortest_path.my_naive_path import MyNaivePath
+from dsa.structures.graphs.shortest_path.with_iterable_subgraph import GraphWithIterableSubGraph
 
 
 class MyAdjListDirectedWeightedGraph(GraphWithIterableSubGraph):

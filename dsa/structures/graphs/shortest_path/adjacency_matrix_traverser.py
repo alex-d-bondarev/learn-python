@@ -1,6 +1,6 @@
 from typing import Optional
 
-from abc_base_graph import BaseGraph
+from dsa.structures.graphs.shortest_path.abc_base_graph import BaseGraph
 
 
 class MyAdjMatrTraverser(BaseGraph):

@@ -25,32 +25,16 @@ select = ["ALL"]
 
 
 ignore = [
-   "S101", # Assers are needed
-   "ANN001", "ANN205", # Force typing, Open to discussion... I think it might be a bit too much to refactor
-   "ANN201", # Tests do not need to return anything,
-   "D103", "D102", "D200", # Open to discussion. I think is a good investment
-   "D100", "D415", "D212", "D205", "D210", "D104",  # This might be really too much
-   "D101", "D107", "D106", # Also don't see the point
-   "INP001", # I currently don't understand how bad this is, https://docs.astral.sh/ruff/rules/implicit-namespace-package/
-   "ANN204", "ANN202", # Doesn't look that bad tbh https://docs.astral.sh/ruff/rules/missing-return-type-special-method/
-   "N815", # Not convinient if using pydantic or other sort of code where the actual typing matters
-   "N805", # Sounds good check but when I need `cls` it fails
-   "SLF001", # Can be discussed, soooomtimes is needed
-   "ISC002", # I don't find it that important
-   "C408", # Does not work quite nice with pytest converters
-   "FBT002", # I think this one can be discussed. I don't personally thing is a good one to have
-   "FBT001", "FBT003", # Ignored for now but I'd put this one as mandatory, so that we use keyword-only arguments
-   "F401", # `gnp_tests_lib.utils.environment.Environment` imported but unused -> Might be in a conftest...
-   "B008", # Ignored for now but I'd put this one as mandatory.
-   "S311", # Standard pseudo-random generators are not suitable for cryptographic purpose
-   "ANN003", # I think we don't want to do this
-   "DTZ007", "DTZ004", "DTZ003", "PLW0603", # Skipped for now but pending refinement!
-   "FIX002", # Keeping To Do in code
-   "TCH001", # Not sure which is the fix for @dataclass
+   "ANN", # We should not force typing
+   "D", # docstrings are overrated
    "F811", # Ruff thinks that pytest fixtures are not used
    "FA100", "FA102", # We should not aim to support python < 3.10
-   "D105", # Dunder methods are usually self-explaining
+   "FIX002", # Keeping To Do in code
+   "ISC002", # I don't find it that important
+   "N805", # Sounds good check but when I need `cls` it fails
+   "N815", # Not convinient if using pydantic or other sort of code where the actual typing matters
    "PYI025", # IMHO this would cause type hints to be longer and less readable
-   "D400", # docstrings are overated
+   "S101", # Assers are needed
+   "TCH001", # Not sure which is the fix for @dataclass
 ]
 
