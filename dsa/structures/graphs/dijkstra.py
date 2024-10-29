@@ -1,6 +1,6 @@
 from heapq import heappop, heappush
 
-from with_iterable_subgraph import GraphWithIterableSubGraph
+from dsa.structures.graphs.with_iterable_subgraph import GraphWithIterableSubGraph
 
 
 class DijkstraShortestPath:
