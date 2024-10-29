@@ -30,9 +30,11 @@ ignore = [
    "F811", # Ruff thinks that pytest fixtures are not used
    "FA100", "FA102", # We should not aim to support python < 3.10
    "FIX002", # Keeping To Do in code
+   "INP001", # I'm not the fan of __init__.py files
    "ISC002", # I don't find it that important
    "N805", # Sounds good check but when I need `cls` it fails
    "N815", # Not convinient if using pydantic or other sort of code where the actual typing matters
+   "PYI024", # Don't force typing
    "PYI025", # IMHO this would cause type hints to be longer and less readable
    "S101", # Assers are needed
    "TCH001", # Not sure which is the fix for @dataclass
