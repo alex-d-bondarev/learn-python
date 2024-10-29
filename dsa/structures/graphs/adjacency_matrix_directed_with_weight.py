@@ -1,11 +1,10 @@
 from collections.abc import Iterable
 from typing import Optional
 
-from dijkstra_shortest_path import DijkstraShortestPath
+from dsa.structures.graphs.adjacency_matrix_traverser import MyAdjMatrTraverser
+from dsa.structures.graphs.dijkstra import DijkstraShortestPath
 from dsa.structures.graphs.my_naive import MyNaivePath
 from dsa.structures.graphs.with_iterable_subgraph import GraphWithIterableSubGraph
-
-from dsa.structures.graphs.adjacency_matrix_traverser import MyAdjMatrTraverser
 
 
 class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, GraphWithIterableSubGraph):
@@ -19,7 +18,7 @@ class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, GraphWithIterableSubGraph):
         return self.size
 
     def add_edge(
-        self, start: int, target: int, weight: int
+            self, start: int, target: int, weight: int,
     ) -> "MyAdjMatrDirWeightedGraph":
         max_required_size = max(start, target) + 1
 
@@ -46,8 +45,7 @@ class MyAdjMatrDirWeightedGraph(MyAdjMatrTraverser, GraphWithIterableSubGraph):
 
         if max_vertex > self.get_size():
             return False
-        else:
-            return self.graph[start][target] is not None
+        return self.graph[start][target] is not None
 
     def connection_weight(self, start: int, target: int) -> Optional[int]:
         if self.are_connected(start, target):
