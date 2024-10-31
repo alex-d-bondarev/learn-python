@@ -29,3 +29,11 @@ jobs:
           IGNORE_GITIGNORED_FILES: true
           VALIDATE_PYTHON_RUFF: true
           PYTHON_RUFF_CONFIG_FILE: pyproject.toml
+
+          # Disable all non-ruff python checks
+          VALIDATE_PYTHON_BLACK: false
+          VALIDATE_PYTHON_FLAKE8: false
+          VALIDATE_PYTHON_ISORT: false
+          VALIDATE_PYTHON_MYPY: false
+          VALIDATE_PYTHON_PYINK: false
+          VALIDATE_PYTHON_PYLINT: false
