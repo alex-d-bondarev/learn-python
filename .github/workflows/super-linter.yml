@@ -26,7 +26,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
           # Non default config
-          LINTER_RULES_PATH: .
+          LINTER_RULES_PATH: ./
           IGNORE_GITIGNORED_FILES: true
           VALIDATE_PYTHON_RUFF: true
           PYTHON_RUFF_CONFIG_FILE: pyproject.toml
