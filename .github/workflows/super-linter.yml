@@ -24,3 +24,8 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: "master"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # Non default config
+          IGNORE_GITIGNORED_FILES: true
+          VALIDATE_PYTHON_RUFF: true
+          PYTHON_RUFF_CONFIG_FILE: pyproject.toml
