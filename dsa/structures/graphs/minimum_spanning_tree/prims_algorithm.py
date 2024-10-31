@@ -10,6 +10,10 @@ Visitor = namedtuple("Visitor", ["position", "parent"])
 
 
 def find_mst(graph: MyAdjMatrUnDirWeightedGraph) -> MST:
+    """
+
+    Some pretty bad docstring
+    """
     visited = [False] * graph.size
     parents = [-1] * graph.size
     weights = [None] * graph.size
