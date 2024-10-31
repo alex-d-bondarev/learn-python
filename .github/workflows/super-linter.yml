@@ -22,7 +22,7 @@ jobs:
         run: |
           { 
             # Disable all non-ruff python checks
-            echo "VALIDATE_PYTHON_BLACK: false";          
+            echo "VALIDATE_PYTHON_BLACK=false";          
           } >> $GITHUB_ENV
 
       - name: Run Super Linter checks
