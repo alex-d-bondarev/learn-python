@@ -22,10 +22,11 @@ jobs:
         uses: super-linter/super-linter@v7.1.0
         env:
           VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: "master"
+          DEFAULT_BRANCH: "origin/master"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
           # Non default config
+          LINTER_RULES_PATH: .
           IGNORE_GITIGNORED_FILES: true
           VALIDATE_PYTHON_RUFF: true
           PYTHON_RUFF_CONFIG_FILE: pyproject.toml
