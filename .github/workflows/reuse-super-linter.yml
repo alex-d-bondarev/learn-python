@@ -1,0 +1,29 @@
+# This workflow executes several linters on changed files based on languages used in your code base whenever
+# you push a code or open a pull request.
+#
+# You can adjust the behavior by modifying this file.
+# For more information, see:
+# https://github.com/github/super-linter
+name: Lint Code Base
+
+on:
+  workflow_dispatch:
+    inputs:
+      folder:
+        description: 'Choose folder to lint. e.g. root folder == "./"'
+        type: string
+        required: true
+        default: './'
+      default_branch:
+        description: 'Changes will be merged to this branch'
+        type: string
+        required: false
+        default: 'origin/master'
+
+jobs:
+  lint:
+    uses: alex-d-bondarev/github-workflows/.github/workflows/shared-super-linter.yml@main
+    secrets: inherit
+    with:
+      folder: ${{ github.event.inputs.folder }}
+      default_branch: ${{ github.event.inputs.default_branch }}
