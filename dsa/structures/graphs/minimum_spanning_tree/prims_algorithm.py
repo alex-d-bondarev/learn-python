@@ -31,8 +31,7 @@ def find_mst(graph: MyAdjMatrUnDirWeightedGraph) -> MST:
                 for neighbor in graph.get_neighbors(visitor.position):
                     if not visited[neighbor.position]:
                         heappush(to_visit, (
-                            neighbor.weight,
-                            Visitor(position=neighbor.position, parent=visitor.position),
+                            neighbor.weight,Visitor(position=neighbor.position, parent=visitor.position),
                         ))
     return MST(parents=parents, weights=weights)
 
