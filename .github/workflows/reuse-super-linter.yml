@@ -10,10 +10,10 @@ on:
   workflow_dispatch:
     inputs:
       folder:
-        description: 'Choose folder to lint. e.g. root folder == "./"'
+        description: 'Choose folder to lint or leave empty for root folder'
         type: string
-        required: true
-        default: './'
+        required: false
+        default: ''
       default_branch:
         description: 'Changes will be merged to this branch'
         type: string
