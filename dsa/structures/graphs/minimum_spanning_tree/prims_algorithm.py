@@ -26,7 +26,7 @@ class MatrixGraph:
         ]
 
 
-def find_mst(graph: MatrixGraph) -> MST:
+def find_prim_mst(graph: MatrixGraph) -> MST:
     """
 
     Some pretty bad docstring
@@ -71,7 +71,7 @@ def test_prim_mst():
         .add_edge(4, 5, 9)
     )
 
-    mst = find_mst(graph)
+    mst = find_prim_mst(graph)
     assert mst.parents == [-1, 0, 3, 1, 2, 3]
     assert mst.weights == [0, 1, 4, 2, 5, 3]
 
@@ -95,6 +95,6 @@ def test_w3s_example():
         .add_edge(6, 7, 5)
     )
 
-    mst = find_mst(graph)
+    mst = find_prim_mst(graph)
     assert mst.parents == [-1, 0, 1, 0, 2, 3, 4, 2]
     assert mst.weights == [0, 4, 3, 3, 4, 4, 3, 2]
