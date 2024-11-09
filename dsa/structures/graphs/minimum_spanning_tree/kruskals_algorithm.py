@@ -20,7 +20,6 @@ class ListGraph:
             raise ValueError(error_msg)
 
         self.edges.append(Edge(left=left, right=right, weight=weight))
-        self.edges = sorted(self.edges, key=lambda edge: edge.weight)
         return self
 
     def find_parent(self, child) -> Optional[int]:
@@ -51,6 +50,8 @@ class ListGraph:
 
 
 def find_kruskal_mst(graph: ListGraph) -> MST:
+    graph.edges = sorted(graph.edges, key=lambda edge: edge.weight)
+
     for edge in graph.edges:
         left_root = graph.find_parent(edge.left)
         right_root = graph.find_parent(edge.right)
