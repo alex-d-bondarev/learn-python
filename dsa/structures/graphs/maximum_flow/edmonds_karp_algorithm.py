@@ -28,7 +28,7 @@ def edmonds_karp(graph: MatrixGraph, source, sink):
         path.append(source)
         path.reverse()
         path_names = [graph.vertexes[node].name for node in path]
-        print("Path:", " -> ".join(path_names), ", Flow:", path_flow)  # noqa: T201
+        print("Path:", " -> ".join(path_names), ", Flow:", path_flow)
 
     return max_flow
 
@@ -49,5 +49,5 @@ def test_small_graph():
     )
 
     max_flow = edmonds_karp(g, 0, 3)
-    print(f"Max flow = {max_flow}")  # noqa: T201
-    assert max_flow == 9  # noqa: PLR2004
+    print(f"Max flow = {max_flow}")
+    assert max_flow == 9

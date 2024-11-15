@@ -19,7 +19,7 @@ def ford_fulkerson(graph: MatrixGraph, source, sink) -> int:
         max_flow += path_flow
 
         path_names = [graph.vertexes[node].name for node in path]
-        print("Path:", " -> ".join(path_names), ", Flow:", path_flow)  # noqa: T201
+        print("Path:", " -> ".join(path_names), ", Flow:", path_flow)
 
         path = graph.dfs(source, sink)
 
@@ -42,5 +42,5 @@ def test_small_graph():
     )
 
     max_flow = ford_fulkerson(g, 0, 3)
-    print(f"Max flow = {max_flow}")  # noqa: T201
-    assert max_flow == 9  # noqa: PLR2004
+    print(f"Max flow = {max_flow}")
+    assert max_flow == 9

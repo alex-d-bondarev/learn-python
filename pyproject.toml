@@ -38,5 +38,7 @@ ignore = [
    "PYI025", # IMHO this would cause type hints to be longer and less readable
    "S101", # Assers are needed
    "TCH001", # Not sure which is the fix for @dataclass
+   "T201", # allow printing
+   "PLR2004", # simplify alorithms
 ]
 
