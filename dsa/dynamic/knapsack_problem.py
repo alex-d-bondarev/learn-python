@@ -230,6 +230,31 @@ def recursion_bf_stateless_memo(
 # ==== Tabulation
 
 
+def knapsack_tabulation(all_items: list[Item], capacity) -> Result:
+    # From https://www.w3schools.com/dsa/dsa_ref_knapsack.php
+    pointer = len(all_items)
+    tab = [[0] * (capacity + 1) for _ in range(pointer + 1)]
+
+    for ix in range(1, pointer + 1):
+        next_item = all_items[ix-1]
+        for w in range(1, capacity + 1):
+            if next_item.weight <= w:
+                include_item = next_item.price + tab[ix-1][w - next_item.weight]
+                exclude_item = tab[ix-1][w]
+                tab[ix][w] = max(include_item, exclude_item)
+            else:
+                tab[ix][w] = tab[ix-1][w]
+
+    items_included: list[Item] = []
+    w = capacity
+    for ix in range(pointer, 0, -1):
+        if tab[ix][w] != tab[ix-1][w]:
+            items_included.append(all_items[ix-1])
+            w -= all_items[ix-1].weight
+
+    return Result(price=tab[pointer][capacity], weight=0, items=items_included)
+
+
 def test_no_items():
     result = loop_bf(NO_ITEMS, 10)
     assert result.price == 0
@@ -244,6 +269,10 @@ def test_no_items():
     assert len(result.items) == 0
 
     result = recursion_bf_stateless_memo(NO_ITEMS, 10)
+    assert result.price == 0
+    assert len(result.items) == 0
+
+    result = knapsack_tabulation(NO_ITEMS, 10)
     assert result.price == 0
     assert len(result.items) == 0
 
@@ -265,6 +294,10 @@ def test_under_capacity():
     assert result.price == 13
     assert len(result.items) == 3
 
+    result = knapsack_tabulation(THREE_ITEMS, 10)
+    assert result.price == 13
+    assert len(result.items) == 3
+
 
 def test_w3c():
     result = loop_bf(W3C_ITEMS, 10)
@@ -280,6 +313,10 @@ def test_w3c():
     assert len(result.items) == 3
 
     result = recursion_bf_stateless_memo(W3C_ITEMS, 10)
+    assert result.price == 1200
+    assert len(result.items) == 3
+
+    result = knapsack_tabulation(W3C_ITEMS, 10)
     assert result.price == 1200
     assert len(result.items) == 3
 
@@ -301,6 +338,10 @@ def test_extra_huge_items():
     assert result.price == 500
     assert len(result.items) == 2
 
+    result = knapsack_tabulation(HUGE_ITEMS, 10)
+    assert result.price == 500
+    assert len(result.items) == 2
+
 
 def test_bigger_list():
     result = loop_bf(MANY_ITEMS, 5)
@@ -316,6 +357,10 @@ def test_bigger_list():
     assert len(result.items) == 2
 
     result = recursion_bf_stateless_memo(MANY_ITEMS, 5)
+    assert result.price == 160
+    assert len(result.items) == 2
+
+    result = knapsack_tabulation(MANY_ITEMS, 5)
     assert result.price == 160
     assert len(result.items) == 2
 
@@ -337,6 +382,10 @@ def test_timing():
 
     print(f"\nStateless recursion with memoization {times} times")
     average = measure_the_average(recursion_bf_stateless_memo, MANY_ITEMS, 5, times)
+    print(f"Average time is {average}")
+
+    print(f"\nTabulation Approach {times} times")
+    average = measure_the_average(knapsack_tabulation, MANY_ITEMS, 5, times)
     print(f"Average time is {average}")
 
 
