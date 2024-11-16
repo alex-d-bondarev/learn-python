@@ -111,5 +111,4 @@ def run_sorting_performance_test(func, unsorted_list):
 def measure_the_average(func, unsorted_list, times: int):
     stmt = f"{func.__name__}({copy(unsorted_list)})"
     total_time = timeit(stmt=stmt, number=times, globals=globals())
-    average_time = f"{((total_time / times) * 1000):.6f}"
-    return average_time
+    return f"{((total_time / times) * 1000):.6f}"
