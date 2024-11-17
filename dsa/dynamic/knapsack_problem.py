@@ -232,27 +232,27 @@ def recursion_bf_stateless_memo(
 
 def knapsack_tabulation(all_items: list[Item], capacity) -> Result:
     # From https://www.w3schools.com/dsa/dsa_ref_knapsack.php
-    pointer = len(all_items)
-    tab = [[0] * (capacity + 1) for _ in range(pointer + 1)]
+    problem_size = len(all_items)
+    tab = [[0] * (capacity + 1) for _ in range(problem_size + 1)]
 
-    for ix in range(1, pointer + 1):
+    for ix in range(1, problem_size + 1):
         next_item = all_items[ix-1]
-        for w in range(1, capacity + 1):
-            if next_item.weight <= w:
-                include_item = next_item.price + tab[ix-1][w - next_item.weight]
-                exclude_item = tab[ix-1][w]
-                tab[ix][w] = max(include_item, exclude_item)
+        for weight in range(1, capacity + 1):
+            if next_item.weight <= weight:
+                include_item = next_item.price + tab[ix-1][weight - next_item.weight]
+                exclude_item = tab[ix-1][weight]
+                tab[ix][weight] = max(include_item, exclude_item)
             else:
-                tab[ix][w] = tab[ix-1][w]
+                tab[ix][weight] = tab[ix-1][weight]
 
     items_included: list[Item] = []
-    w = capacity
-    for ix in range(pointer, 0, -1):
-        if tab[ix][w] != tab[ix-1][w]:
+    weight = capacity
+    for ix in range(problem_size, 0, -1):
+        if tab[ix][weight] != tab[ix-1][weight]:
             items_included.append(all_items[ix-1])
-            w -= all_items[ix-1].weight
+            weight -= all_items[ix-1].weight
 
-    return Result(price=tab[pointer][capacity], weight=0, items=items_included)
+    return Result(price=tab[problem_size][capacity], weight=0, items=items_included)
 
 
 def test_no_items():
