@@ -1,6 +1,6 @@
 import logging
 
-from dsa.structures.my_hash_table import MyHashTable
+from src.data_structures.my_hash_table import MyHashTable
 
 logger = logging.getLogger(__name__)
 
@@ -11,7 +11,7 @@ class MyHashSet(MyHashTable):
     def __init__(self, size=None):
         super().__init__(size)
 
-    def add(self, value) -> "MyHashTable":
+    def add(self, value) -> MyHashTable:
         if self.contains(value):
             return self
         else:

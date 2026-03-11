@@ -16,7 +16,7 @@ class MyHashMap:
 
     def __init__(self, size=None):
         self.num_of_buckets = size if size else 10
-        self.buckets: list[list["MyHashMap.Entry"]] = [[] for _ in range(self.num_of_buckets)]
+        self.buckets: list[list[MyHashMap.Entry]] = [[] for _ in range(self.num_of_buckets)]
         self.num_of_entries = 0
 
     @staticmethod
@@ -60,7 +60,7 @@ class MyHashMap:
                 updated = True
 
         if not updated:
-            self.buckets[key_hash].append(new_entry)
+            bucket.append(new_entry)
             self.num_of_entries += 1
 
             if self._time_to_rehash():

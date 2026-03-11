@@ -16,7 +16,7 @@ class MyStack:
     def peek(self) -> Any:
         if self.is_empty():
             return None
-        return self.values[self.size() - 1]
+        return self.values[-1]
 
     def is_empty(self) -> bool:
         return self.size() == 0
