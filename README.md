@@ -2,12 +2,20 @@
 Learn python basics
 
 ## Build
+
 ### First time
-1. Make sure that ```python3 --version``` is `3.10.*`.
-2. Run ```poetry env use `python --version | grep -Eo '[0-9]+([.][0-9]+)+([.][0-9]+)?'` && poetry install```
+
+1. Make sure [uv](https://docs.astral.sh/uv/getting-started/installation/) is installed
+2. Run `uv sync`
 
 ### Update dependencies
-Run ```poetry update```
 
-### Find virtual env
-RUn ```poetry show -v | grep "Using virtualenv"```
+Run `uv sync`
+
+## Change code
+
+Run ruff from time to time from project root or from specific folder
+```shell
+ruff check
+ruff format
+```

@@ -1,20 +1,14 @@
-[tool.poetry]
+[project]
 name = "learn-python"
 version = "1.5.6"
 description = "Learn to use Python"
-authors = ["Sasha Bondarev <no@email.com>"]
+authors = [{ name = "Sasha Bondarev", email = "no@email.com" }]
+requires-python = ">=3.14"
 readme = "README.md"
 license = "MIT"
-
-[tool.poetry.dependencies]
-python = "~3.11"
-
-pyglet = "==2.0.10"
-pytest = "==7.2.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+dependencies = [
+    "pytest==9.0.2",
+]
 
 [tool.ruff]
 line-length = 90
@@ -41,5 +35,10 @@ ignore = [
    "PLR2004", # simplify alorithms
    "ISC001", "COM812", # fix default ruff warning
    "INP001", # Ignore missing `__init__.py` files
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.5",
 ]
 

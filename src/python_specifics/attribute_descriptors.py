@@ -60,7 +60,7 @@ class ChildType:
         return instance.__dict__[self.name]
 
 
-class ChildInstace:
+class ChildInstance:
     """isinstance(value, ChildClass)"""
 
     def __init__(self, name):
@@ -79,7 +79,7 @@ class ChildInstace:
 
 class TypesTest:
     child_type = ChildType("child_type")
-    child_instance = ChildInstace("child_instance")
+    child_instance = ChildInstance("child_instance")
 
     def __init__(self, child_type, child_instance):
         self.child_type = child_type
