@@ -1,6 +1,6 @@
 import logging
 
-from src.data_structures.my_hash_table import MyHashTable
+from src.data_structures.common.my_hash_table import MyHashTable
 
 logger = logging.getLogger(__name__)
 
