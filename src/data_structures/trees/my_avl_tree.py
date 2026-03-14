@@ -24,6 +24,12 @@ class MyBinarySearchTree:
     def __init__(self, value: int | str):
         self.root: AvlTreeNode = AvlTreeNode(value)
 
+    def __repr__(self):
+        self.to_string()
+
+    def __str__(self):
+        self.to_string()
+
     @staticmethod
     def get_height(node: Optional[AvlTreeNode]) -> int:
         return node.height if node else 0
@@ -36,9 +42,9 @@ class MyBinarySearchTree:
     def right_rotate(self, node: AvlTreeNode):
         print("Rotate right on node", node.value)
         left_child = node.left
-        right_child_of_left = left_child.right
+        left_child_right = left_child.right
         left_child.right = node
-        node.left = right_child_of_left
+        node.left = left_child_right
         node.height = 1 + max(
             self.get_height(node.left),
             self.get_height(node.right),
@@ -52,9 +58,9 @@ class MyBinarySearchTree:
     def left_rotate(self, node: AvlTreeNode):
         print("Rotate left on node", node.value)
         right_child = node.right
-        left_child_of_right = right_child.left
+        right_child_left = right_child.left
         right_child.left = node
-        node.right = left_child_of_right
+        node.right = right_child_left
         node.height = 1 + max(
             self.get_height(node.left),
             self.get_height(node.right),
@@ -83,20 +89,20 @@ class MyBinarySearchTree:
         balance = self.get_balance(node)
 
         # Balancing the tree
-        # Left-Left
+        # Right
         if balance > 1 and self.get_balance(node.left) >= 0:
             return self.right_rotate(node)
 
-        # Left-Right
+        # Right-Left
         if balance > 1 and self.get_balance(node.left) < 0:
             node.left = self.left_rotate(node.left)
             return self.right_rotate(node)
 
-        # Right-Right
+        # Left
         if balance < -1 and self.get_balance(node.right) <= 0:
             return self.left_rotate(node)
 
-        # Right-Left
+        # Left-Right
         if balance < -1 and self.get_balance(node.right) > 0:
             node.right = self.right_rotate(node.right)
             return self.left_rotate(node)

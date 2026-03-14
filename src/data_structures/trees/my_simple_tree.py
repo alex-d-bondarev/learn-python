@@ -120,4 +120,4 @@ def test_tree_flow():
     assert tree.height() == 2
     assert tree.size() == 4
 
-    logger.info(repr(tree))
+    assert repr(tree) == "Tree(TreeNode(value=root, children=[TreeNode(value=first, children=[]), TreeNode(value=second, children=[TreeNode(value=first_sub_second, children=[])])]))"
