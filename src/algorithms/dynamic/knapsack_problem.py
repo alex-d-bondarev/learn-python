@@ -252,7 +252,7 @@ def knapsack_tabulation(all_items: list[Item], capacity) -> Result:
             items_included.append(all_items[ix-1])
             weight -= all_items[ix-1].weight
 
-    return Result(price=tab[problem_size][capacity], weight=0, items=items_included)
+    return Result(price=tab[problem_size][capacity], weight=weight, items=items_included)
 
 
 def test_no_items():

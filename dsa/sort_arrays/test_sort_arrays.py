@@ -11,7 +11,7 @@ from dsa.sort_arrays.counting_sort import (
     counting_sort_w3c,
 )
 from dsa.sort_arrays.hybrids import call_quicksort_so, quick_insertion_sort_hybrid
-from dsa.sort_arrays.insertion_sort import insertion_sort
+from src.algorithms.sorting.insertion_sort import insertion_sort
 from dsa.sort_arrays.merge_sort import merge_sort_loop, merge_sort_req
 from dsa.sort_arrays.quick_sort import call_quick_sort
 from dsa.sort_arrays.radix_sort import rad_sort_w3c, simple_rad_sort
