@@ -7,7 +7,14 @@ requires-python = ">=3.14"
 readme = "README.md"
 license = "MIT"
 dependencies = [
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.3",
     "pytest==9.0.2",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.6",
 ]
 
 [tool.ruff]
@@ -35,10 +42,5 @@ ignore = [
    "PLR2004", # simplify alorithms
    "ISC001", "COM812", # fix default ruff warning
    "INP001", # Ignore missing `__init__.py` files
-]
-
-[dependency-groups]
-dev = [
-    "ruff>=0.15.5",
 ]
 
