@@ -43,7 +43,7 @@ def find_prim_mst(graph: MatrixGraph) -> MST:
             visited[visitor.position] = True
             if not weights[visitor.position] or weights[visitor.position] > weight:
                 weights[visitor.position] = weight
-                parents[visitor.position] = visitor.parent
+                parents[visitor.position] = visitor._parent
 
                 for neighbor in graph.get_neighbors(visitor.position):
                     if not visited[neighbor.position]:
