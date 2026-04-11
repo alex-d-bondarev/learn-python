@@ -52,8 +52,9 @@ class MyBinaryMaxHeap:
 
     def build_heap(self, new_list) -> None:
         self.heap = new_list[:]
-        # Start from the last non-leaf node and heapify down each node
-        for i in range(len(self.heap) // 2 - 1, -1, -1):
+
+        last_non_leaf = len(self.heap) // 2 - 1
+        for i in range(last_non_leaf, -1, -1):
             self._heapify_down(i)
 
     def extract_max(self) -> Optional[int]:
