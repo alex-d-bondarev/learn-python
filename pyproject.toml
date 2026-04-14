@@ -9,7 +9,7 @@ license = "MIT"
 dependencies = [
     "matplotlib>=3.10.8",
     "numpy>=2.4.3",
-    "pytest==9.0.2",
+    "pytest==9.0.3",
 ]
 
 [dependency-groups]
