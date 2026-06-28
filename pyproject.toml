@@ -7,14 +7,14 @@ requires-python = ">=3.14"
 readme = "README.md"
 license = "MIT"
 dependencies = [
-    "matplotlib>=3.10.8",
-    "numpy>=2.4.3",
-    "pytest==9.0.2",
+    "matplotlib>=3.11.0",
+    "numpy>=2.5.0",
+    "pytest==9.1.1",
 ]
 
 [dependency-groups]
 dev = [
-    "ruff>=0.15.6",
+    "ruff>=0.15.20",
 ]
 
 [tool.ruff]
